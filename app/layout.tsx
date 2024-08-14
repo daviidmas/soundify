@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
+import Sidebar from "@/components/sidebar";
+import Player from "@/components/player";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -20,8 +23,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={cn( "min-h-screen bg-background font-sans antialiased",inter.variable)}>
-          {children}
+        <body className={cn("bg-background font-sans antialiased",inter.variable)}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+          <div className="flex flex-col">
+            <div className="flex flex-1">
+              <Sidebar></Sidebar>
+              <div className="flex-1 p-6">
+                {children}
+              </div>
+            </div>
+            <Player></Player>
+          </div>
+          </ThemeProvider>
         </body>
     </html>
   );
